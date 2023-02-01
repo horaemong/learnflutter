@@ -1,56 +1,94 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  var icon_icons = [
+    Icons.phone,
+    Icons.message,
+    Icons.contact_page,
+  ];
+  var icon_texts = [
+    'Phone',
+    'Message',
+    'Contact',
+  ];
+  var like = [0,0,0];
+  var a = 1;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Text(a.toString()),
+          onPressed: () {
+            setState(() {
+              a++;
+            });
+          },
+        ),
         appBar: AppBar(
-          title: const Text('My First App'),
+          title: Text('My First App'),
         ),
-        body: Container(
-          width: double.infinity,
-          height: 150,
-          padding: EdgeInsets.all(10),
-          child: Row(
-            children: [
-              Image.asset('assets/images/1.png', width: 150),
-              Expanded(
-                  child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('카메라 팝니다.'),
-                    Text('금호동 3가'),
-                    Text('7000원'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [Icon(Icons.favorite), Text('4')],
-                    )
-                ],
-              ))
-            ],
-          ),
+        body: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return ListTile(
+              leading: Text(like[index].toString()),
+              title: Text(icon_texts[index]),
+              trailing: ElevatedButton(
+                child: Text('좋아요'),
+                onPressed: () {
+                  setState(() {
+                    setState(() {
+                      like[index]++;
+                    });
+                  });
+                },
+              ),
+            );
+          },
         ),
-        bottomNavigationBar: BottomAppBar(
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Icon(Icons.phone),
-                Icon(Icons.message),
-                Icon(Icons.contact_page)
-              ],
-            ),
-          ),
+        bottomNavigationBar: phone_bottom_appbar(),
+      ),
+    );
+  }
+}
+
+
+class phone_bottom_appbar extends StatelessWidget {
+  const phone_bottom_appbar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      child: SizedBox(
+        height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: const [
+            Icon(Icons.phone),
+            Icon(Icons.message),
+            Icon(Icons.contact_page)
+          ],
         ),
       ),
     );
   }
 }
+
+
+
+
